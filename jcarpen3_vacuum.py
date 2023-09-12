@@ -1,6 +1,6 @@
 from vacuum import VacuumAgent
 
-class Jsmith3VacuumAgent(VacuumAgent):
+class Jcarpen3VacuumAgent(VacuumAgent):
 
     def __init__(self):
         super().__init__()
