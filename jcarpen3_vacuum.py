@@ -1,37 +1,51 @@
 from vacuum import VacuumAgent
 import random
 
+
 class Jcarpen3VacuumAgent(VacuumAgent):
 
     def __init__(self):
         super().__init__()
         self.squares_visited = set()
+        self.current_square = (0, 0)
         self.turn_off = False
 
     def program(self, percept):
-        bump, status = percept
+        bumped, status = percept
 
-        current_square = (self.x, self.y)
-        self.visited_squares.add(current_square)
+        if action_reach:
+            x, y = self.current_square
+            dx, dy = square[0] - x, square[1] - y
 
-        if status == 'Dirty':
-            self.turn_off = False
-            return 'Suck'
-        
-        else:
-            if self.turn_off:
-                return 'Turnoff'
+            if dx == 1:
+                return 'Right'
+            elif dx == -1:
+                return 'Left'
+            elif dy == 1:
+                return 'Up'
+            elif dy == -1:
+                return 'Down'
+
+        if get_adjacent_squares:
+            x, y = square
+            return [(x+1, y), (x-1, y), (x, y+1), (x, y-1)]
+
+        if choose_next_action:
+            next_square = self.get_adjacent_ squares(self.current_square)
+            for square in next_square:
+                if square not in self.square_visited:
+                    self.squares_visited.add(square)
+                    return self.action_reach(square)
+
             
-            else:
-                possible_actions = [action for action in self.possible_actions if self.move_is_valid(action)]
-                unvisited_squares = [action for action in possible_actions if self.get_location_from_action(action) not in self.visited_squares]
-            
-            if unvisited_squares:
-                next_action = random.choice(unvisited_squares)
-                self.visited_squares.add(self.get_location_from_action(next_action))
-                return next_action
-            else:
-                self.turn_off = True
-                return 'NoOp'  # Stay in place if all squares are visited
-        
-       
+
+            if status == 'Dirty':
+                self.turn_off = False
+                return 'Suck'
+
+            if not self.turn_off:
+                next_action = self.choose_next_action()
+                if next_action:
+                    return next_action
+
+        return random.choice(self.possible_actions)
