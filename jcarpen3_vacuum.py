@@ -7,6 +7,7 @@ class Jcarpen3VacuumAgent(VacuumAgent):
         super().__init__()
         self.direction = 'Right'
         self.squares_cleaned = set()
+        self.last_square = None
 
 
     def program(self, percept):
@@ -17,13 +18,19 @@ class Jcarpen3VacuumAgent(VacuumAgent):
         if dirt == "Dirty":
             return 'Suck'
         
+        if status == 'Clean':
+            new_square = random.choice(possible_directions)
+            while new_square == self.last_square:
+                new_square = random.choice(possible_directions)
+                
+            self.direction = new_square
+            self.last_square = self.direction
+            
+        
         elif status == 'Bump':
             possible_directions.remove(self.direction)
             self.direction = random.choice(possible_directions)
         
-        
-        elif status == 'Clean':
-            self.direction = random.choice(possible_directions)
             
         return self.direction
             
