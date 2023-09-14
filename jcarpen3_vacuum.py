@@ -8,4 +8,8 @@ class Jcarpen3VacuumAgent(VacuumAgent):
         # any initialization you want to do here
 
     def program(self, percept):
-        return random.choice(self.possible_actions)
+        bump, status = percept
+        if status == 'Dirty':
+            return 'Suck'
+        else:
+            return random.choice(self.possible_actions)
