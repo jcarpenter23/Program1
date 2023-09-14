@@ -9,6 +9,10 @@ class Jcarpen3VacuumAgent(VacuumAgent):
 
     def program(self, percept):
         bump, status = percept
+
+        current_status = self.location
+        self.swuare_achieved.add(current_status)
+
         if status == 'Dirty':
             return 'Suck'
         else:
