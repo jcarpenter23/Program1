@@ -1,4 +1,5 @@
 from vacuum import VacuumAgent
+import random
 
 class Jcarpen3VacuumAgent(VacuumAgent):
 
@@ -7,4 +8,4 @@ class Jcarpen3VacuumAgent(VacuumAgent):
         # any initialization you want to do here
 
     def program(self, percept):
-        return 'NoOp'
+        return random.choice(self.possible_actions)
