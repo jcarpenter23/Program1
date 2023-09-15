@@ -18,6 +18,8 @@ class Jcarpen3VacuumAgent(VacuumAgent):
         if dirt == "Dirty":
             return 'Suck'
         
+        
+        
         if status == 'Clean':
             new_square = random.choice(possible_directions)
             while new_square == self.last_square:
@@ -26,15 +28,30 @@ class Jcarpen3VacuumAgent(VacuumAgent):
             self.direction = new_square
             self.last_square = self.direction
             
+            
         
         elif status == 'Bump':
             possible_directions.remove(self.direction)
+            
+            if self.last_square:
+                possible_directions.remove(self.opposite_direction(self.last_square))
+           
             self.direction = random.choice(possible_directions)
         
             
         return self.direction
-            
-            
-            
     
-       
+    def opposite_direction(self, direction):
+        
+        if direction == 'Up':
+            return 'Down'
+        
+        if direction == 'Down':
+            return 'Up'
+        
+        if direction == "Left":
+            return 'Right'
+        
+        if direction == "Right":
+            return "Left"
+                   
